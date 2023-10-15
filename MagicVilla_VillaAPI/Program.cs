@@ -1,9 +1,6 @@
-using MagicVilla_VillaAPI.Logging;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<ILogging, LoggingV2>();
 
 builder.Services.AddControllers(options =>
 {
