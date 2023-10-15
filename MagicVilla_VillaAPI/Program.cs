@@ -1,12 +1,9 @@
-using Serilog;
+using MagicVilla_VillaAPI.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-Log.Logger = new LoggerConfiguration().MinimumLevel.Information()
-    .WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
-
-builder.Host.UseSerilog();
+builder.Services.AddSingleton<ILogging, LoggingV2>();
 
 builder.Services.AddControllers(options =>
 {

@@ -1,4 +1,5 @@
 ﻿using MagicVilla_VillaAPI.Data;
+using MagicVilla_VillaAPI.Logging;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace MagicVilla_VillaAPI.Controllers
     [Route("api/[controller]")]
     public class VillaAPIController : ControllerBase
     {
-        private readonly ILogger<VillaAPIController> _logger;
+        private readonly ILogging _logger;
 
-        public VillaAPIController(ILogger<VillaAPIController> logger)
+        public VillaAPIController(ILogging logger)
         {
             _logger = logger;
         }
@@ -22,16 +23,16 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<VillaDto>> GetVillas()
         {
-            _logger.LogInformation(string.Format("Start: GetVillas() Invoke"));
+            _logger.Log("Start: GetVillas() Invoke", "info");
             
             var villas = VillaStore.villaList;
             if (villas.Count == 0)
             {
-                _logger.LogInformation(string.Format(@"We don't have any villa yet."));
+                _logger.Log("We don't have any villa yet.", "error");
                 return NoContent();
             }                
 
-            _logger.LogInformation(string.Format(@"Finish: GetVillas() Count:{0}", villas.Count));
+            _logger.Log("Finish: GetVillas() Count:"+villas.Count, "info");
             return Ok(villas);
         }
 
