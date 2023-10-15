@@ -2,6 +2,7 @@
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
@@ -48,7 +49,15 @@ namespace MagicVilla_VillaAPI.Controllers
 
             if (villaDto.Id > 0) return StatusCode(StatusCodes.Status500InternalServerError);
 
-            villaDto.Id = VillaStore.villaList.OrderByDescending(v => v.Id).FirstOrDefault().Id + 1;
+            if(VillaStore.villaList.FirstOrDefault(u=>u.Name.ToLower() == villaDto.Name.ToLower()) != null)
+            {
+                ModelState.AddModelError("customError", "Villa already exists!");
+                return BadRequest(ModelState);
+            }
+
+            villaDto.Id = VillaStore.villaList.OrderByDescending(v => v.Id).FirstOrDefault() == null ? 
+                1 : 
+                VillaStore.villaList.OrderByDescending(v => v.Id).FirstOrDefault().Id + 1;
 
             VillaStore.villaList.Add(villaDto);
 
