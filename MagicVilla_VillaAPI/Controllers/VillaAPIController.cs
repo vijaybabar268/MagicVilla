@@ -10,15 +10,28 @@ namespace MagicVilla_VillaAPI.Controllers
     [Route("api/[controller]")]
     public class VillaAPIController : ControllerBase
     {
+        private readonly ILogger<VillaAPIController> _logger;
+
+        public VillaAPIController(ILogger<VillaAPIController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpGet("villas")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<VillaDto>> GetVillas()
         {
+            _logger.LogInformation(string.Format("Start: GetVillas() Invoke"));
+            
             var villas = VillaStore.villaList;
             if (villas.Count == 0)
+            {
+                _logger.LogInformation(string.Format(@"We don't have any villa yet."));
                 return NoContent();
+            }                
 
+            _logger.LogInformation(string.Format(@"Finish: GetVillas() Count:{0}", villas.Count));
             return Ok(villas);
         }
 
