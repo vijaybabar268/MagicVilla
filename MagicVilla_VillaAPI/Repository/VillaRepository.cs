@@ -56,7 +56,7 @@ namespace MagicVilla_VillaAPI.Repository
 
         public async Task UpdateAsync(Villa entity)
         {
-            _db.Villas.Remove(entity);
+            _db.Villas.Update(entity);
             await SaveAsync();
         }
     }
