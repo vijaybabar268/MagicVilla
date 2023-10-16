@@ -3,9 +3,7 @@ using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
@@ -67,8 +65,6 @@ namespace MagicVilla_VillaAPI.Controllers
         {
             if (createDto == null) return BadRequest();
 
-            //if (villaDto.Id > 0) return StatusCode(StatusCodes.Status500InternalServerError);
-
             if(_db.Villas.FirstOrDefault(u=>u.Name.ToLower() == createDto.Name.ToLower()) != null)
             {
                 ModelState.AddModelError("customError", "Villa already exists!");
@@ -109,10 +105,6 @@ namespace MagicVilla_VillaAPI.Controllers
         public async Task<IActionResult> UpdateVilla(int id, [FromBody]VillaUpdateDto updateDto)
         {
             if (updateDto == null || id != updateDto.Id || id <= 0) return BadRequest();
-
-            //var villa = await _db.Villas.FirstOrDefaultAsync(v => v.Id == id);
-            //if (villa == null)
-            //    return NotFound();
 
             Villa model = _mapper.Map<Villa>(updateDto);
 
