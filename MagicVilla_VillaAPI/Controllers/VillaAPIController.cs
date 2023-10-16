@@ -58,11 +58,11 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<VillaDto> CreateVilla([FromBody]VillaDto villaDto)
+        public ActionResult<VillaDto> CreateVilla([FromBody]VillaCreateDto villaDto)
         {
             if (villaDto == null) return BadRequest();
 
-            if (villaDto.Id > 0) return StatusCode(StatusCodes.Status500InternalServerError);
+            //if (villaDto.Id > 0) return StatusCode(StatusCodes.Status500InternalServerError);
 
             if(_db.Villas.FirstOrDefault(u=>u.Name.ToLower() == villaDto.Name.ToLower()) != null)
             {
@@ -83,7 +83,7 @@ namespace MagicVilla_VillaAPI.Controllers
             };
 
             _db.Villas.Add(model);
-            var res = _db.SaveChanges();
+            _db.SaveChanges();
 
             return CreatedAtRoute("GetVilla", new { id = model.Id }, model);
         }
@@ -111,7 +111,7 @@ namespace MagicVilla_VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult UpdateVilla(int id, [FromBody]VillaDto villaDto)
+        public IActionResult UpdateVilla(int id, [FromBody]VillaUpdateDto villaDto)
         {
             if (villaDto == null || id != villaDto.Id || id <= 0) return BadRequest();
 
