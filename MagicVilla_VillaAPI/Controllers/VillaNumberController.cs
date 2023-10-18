@@ -2,6 +2,7 @@
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using MagicVilla_VillaAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -13,11 +14,13 @@ namespace MagicVilla_VillaAPI.Controllers
     {
         internal APIResponse _response;
         private readonly IVillaNumberRepository _dbVillaNumber;
+        private readonly IVillaRepository _dbVilla;
         private readonly IMapper _mapper;
 
-        public VillaNumberController(IVillaNumberRepository dbVillaNumber, IMapper mapper)
+        public VillaNumberController(IVillaNumberRepository dbVillaNumber, IVillaRepository dbVilla, IMapper mapper)
         {
             _dbVillaNumber = dbVillaNumber;
+            _dbVilla = dbVilla;
             _mapper = mapper;
             _response = new();
         }
@@ -81,6 +84,14 @@ namespace MagicVilla_VillaAPI.Controllers
                 if(createDto == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+
+                if (await _dbVilla.GetAsync(v => v.Id == createDto.VillaId) == null) 
+                {
+                    ModelState.AddModelError("customError", "Villa ID is invalid.");
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.Result = ModelState;
                     return BadRequest(_response);
                 }
 
@@ -160,6 +171,14 @@ namespace MagicVilla_VillaAPI.Controllers
                 if (id <= 0 || id != updateDto.VillaNo || updateDto == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+
+                if (await _dbVilla.GetAsync(v => v.Id == updateDto.VillaId) == null)
+                {
+                    ModelState.AddModelError("customError", "Villa ID is invalid.");
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.Result = ModelState;
                     return BadRequest(_response);
                 }
 
