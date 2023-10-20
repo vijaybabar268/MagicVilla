@@ -1,6 +1,10 @@
+using MagicVilla_Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(MappingConfig));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
