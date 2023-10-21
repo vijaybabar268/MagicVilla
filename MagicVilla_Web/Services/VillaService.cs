@@ -10,7 +10,7 @@ namespace MagicVilla_Web.Services
         private readonly IHttpClientFactory _httpClient;
         private readonly string _villaUrl;
 
-        public VillaService(IHttpClientFactory httpClient, IConfiguration config, string villaUrl)
+        public VillaService(IHttpClientFactory httpClient, IConfiguration config)
             : base(httpClient)
         {
             _httpClient = httpClient;
@@ -41,7 +41,7 @@ namespace MagicVilla_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDetail.ApiType.GET,
-                Url = _villaUrl + "/api/villaAPI"
+                Url = _villaUrl + "/api/villaAPI/villas"
             });
         }
 
@@ -50,7 +50,7 @@ namespace MagicVilla_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDetail.ApiType.GET,
-                Url = _villaUrl + "/api/villaAPI/" + id
+                Url = _villaUrl + "/api/villaAPI/villa" + id
             });
         }
 
