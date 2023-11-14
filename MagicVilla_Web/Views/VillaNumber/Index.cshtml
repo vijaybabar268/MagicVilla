@@ -14,7 +14,7 @@
         <thead>
             <tr>
                 <th>Villa Name</th>
-                <th>Vill Number</th>
+                <th>Villa Number</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -25,8 +25,8 @@
                     <td>@item.Villa.Name</td>
                     <td>@item.VillaNo</td>
                     <td>
-                        <a asp-controller="Villa" asp-action="EditVillaNumber" asp-route-id="@item.VillaNo" class="btn btn-success">Edit</a>
-                        <a asp-controller="Villa" asp-action="DeleteVillaNumber" asp-route-id="@item.VillaNo" class="btn btn-danger">Delete</a>
+                        <a asp-controller="VillaNumber" asp-action="EditVillaNumbers" asp-route-id="@item.VillaNo" class="btn btn-success">Edit</a>
+                        <a asp-controller="VillaNumber" asp-action="DeleteVillaNumbers" asp-route-id="@item.VillaNo" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }

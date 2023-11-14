@@ -20,15 +20,15 @@ namespace MagicVilla_Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<VillaDto> list = null;
+            List<VillaDto> getAllVillas = new List<VillaDto>();
            
             var response = await _villaService.GetAllAsync<APIResponse>();
             if (response != null && response.IsSuccess) 
             {
-                list = JsonConvert.DeserializeObject<List<VillaDto>>(response.Result.ToString());                
+                getAllVillas = JsonConvert.DeserializeObject<List<VillaDto>>(response.Result.ToString());                
             }
 
-            return View(list);
+            return View(getAllVillas);
         }
     }
 }
