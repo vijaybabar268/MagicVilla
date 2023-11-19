@@ -1,0 +1,26 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.1/dist/sweetalert2.all.min.js"></script>
+
+@if (TempData["success"] != null)
+{
+    <script type="text/javascript">
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "@TempData["success"]",
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>
+}
+@if (TempData["error"] != null)
+{
+    <script type="text/javascript">
+        Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "@TempData["error"]",
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>
+}
