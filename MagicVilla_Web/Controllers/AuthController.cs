@@ -4,9 +4,11 @@ using MagicVilla_Web.Models;
 using MagicVilla_Web.Models.Dto;
 using MagicVilla_Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace MagicVilla_Web.Controllers
 {
@@ -35,6 +37,14 @@ namespace MagicVilla_Web.Controllers
             if (response != null || response.IsSuccess)
             {
                 LoginResponseDto result = JsonConvert.DeserializeObject<LoginResponseDto>(response.Result.ToString());
+
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.Name, result.User.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Role, result.User.Role));
+
+                var pricipal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, pricipal);
+
                 HttpContext.Session.SetString(StaticDetail.SessionToken, result.Token);
                 return RedirectToAction("Index", "Home");
             }
