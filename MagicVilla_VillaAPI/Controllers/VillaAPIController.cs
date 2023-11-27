@@ -9,7 +9,10 @@ using System.Net;
 namespace MagicVilla_VillaAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [ApiVersion("3.0")]
     [Authorize]
     public class VillaAPIController : ControllerBase
     {
@@ -27,6 +30,8 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpGet("villas")]
+        [MapToApiVersion("1.0")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<APIResponse>> GetVillas()
@@ -57,6 +62,22 @@ namespace MagicVilla_VillaAPI.Controllers
             }
 
             return _response;
+        }
+
+        [HttpGet("villas")]
+        [AllowAnonymous]
+        [MapToApiVersion("2.0")]
+        public async Task<string> Get()
+        {
+            return "Hello world from version 2.0";
+        }
+
+        [HttpGet("villas")]
+        [AllowAnonymous]
+        [MapToApiVersion("3.0")]
+        public async Task<string> GetThird()
+        {
+            return "Hello world from version 3.0";
         }
 
         [HttpGet("{id}", Name = "GetVilla")]
