@@ -51,7 +51,9 @@ builder.Services.AddSwaggerGen(opt =>
 {
     opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Test",
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n" + 
+                      "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\n" +
+                      "Example: \"Bearer 12345asdf\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Scheme = "Bearer"
@@ -71,6 +73,23 @@ builder.Services.AddSwaggerGen(opt =>
                 In = ParameterLocation.Header
             },
             new List<string>()
+        }
+    });
+    opt.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Magic Villa",
+        Description = "API to manage Villa",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Dotnetmasterry",
+            Url = new Uri("https://example.com/licence/contact")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Example License",
+            Url = new Uri("https://example.com/licence")
         }
     });
 });
@@ -93,7 +112,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Magic_Villa");
+    });
 }
 
 app.UseHttpsRedirection();
