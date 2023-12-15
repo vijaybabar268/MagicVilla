@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v1
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]    
+    [ApiVersion("1.0")]
     [Authorize]
-    public class VillaAPIv1Controller : ControllerBase
+    public class VillaAPIController : ControllerBase
     {
-        private readonly ILogger<VillaAPIv1Controller> _logger;
+        private readonly ILogger<VillaAPIController> _logger;
         private readonly IVillaRepository _dbVilla;
         private readonly IMapper _mapper;
         protected APIResponse _response;
 
-        public VillaAPIv1Controller(ILogger<VillaAPIv1Controller> logger, IVillaRepository dbVilla, IMapper mapper)
+        public VillaAPIController(ILogger<VillaAPIController> logger, IVillaRepository dbVilla, IMapper mapper)
         {
             _logger = logger;
             _dbVilla = dbVilla;
@@ -60,7 +60,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
             return _response;
         }
-               
+
         [HttpGet("{id}", Name = "GetVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

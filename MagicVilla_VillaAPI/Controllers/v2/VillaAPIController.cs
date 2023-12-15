@@ -1,22 +1,23 @@
 ﻿using AutoMapper;
+using MagicVilla_VillaAPI.Controllers.v1;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v2
 {
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]    
-    [ApiVersion("3.0")]
-    public class VillaAPIv3Controller : ControllerBase
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("2.0")]
+    public class VillaAPIController : ControllerBase
     {
-        private readonly ILogger<VillaAPIv1Controller> _logger;
+        private readonly ILogger<v1.VillaAPIController> _logger;
         private readonly IVillaRepository _dbVilla;
         private readonly IMapper _mapper;
         protected APIResponse _response;
 
-        public VillaAPIv3Controller(ILogger<VillaAPIv1Controller> logger, IVillaRepository dbVilla, IMapper mapper)
+        public VillaAPIController(ILogger<v1.VillaAPIController> logger, IVillaRepository dbVilla, IMapper mapper)
         {
             _logger = logger;
             _dbVilla = dbVilla;
@@ -25,9 +26,9 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpGet("villas")]
-        public async Task<string> GetThird()
+        public async Task<string> Get()
         {
-            return "Hello world from version 3.0";
+            return "Hello world from version 2.0";
         }
     }
 }
