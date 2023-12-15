@@ -1,0 +1,23 @@
+GET https://localhost:7001/api/v1/VillaAPIv/villas
+
+GET https://localhost:7001/api/v1/VillaAPIv/30
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE3MDI2NjM4MjgsImV4cCI6MTcwMjgzNjYyOCwiaWF0IjoxNzAyNjYzODI4fQ.Hq_LhOzvXeBI2G9r-fbGLuvBMa9JffM2DCZTTpndbYk
+
+POST https://localhost:7001/api/v1/VillaAPIv
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJyb2xlIjoiYWRtaW4iLCJuYmYiOjE3MDI2NjM4MjgsImV4cCI6MTcwMjgzNjYyOCwiaWF0IjoxNzAyNjYzODI4fQ.Hq_LhOzvXeBI2G9r-fbGLuvBMa9JffM2DCZTTpndbYk
+Content-Type: application/json
+{
+  "name": "string",
+  "details": "string",
+  "rate": 0,
+  "sqft": 0,
+  "occupancy": 0,
+  "imageUrl": "string",
+  "amenity": "string"
+}
+
+GET https://localhost:7001/api/v1/VillaAPIv/villas
+
+GET https://localhost:7001/api/v2/VillaAPIv/villas
+
+GET https://localhost:7001/api/v3/VillaAPIv/villas

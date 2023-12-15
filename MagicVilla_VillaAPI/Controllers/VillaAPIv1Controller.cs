@@ -10,18 +10,16 @@ namespace MagicVilla_VillaAPI.Controllers
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
-    [ApiVersion("3.0")]
+    [ApiVersion("1.0")]    
     [Authorize]
-    public class VillaAPIController : ControllerBase
+    public class VillaAPIv1Controller : ControllerBase
     {
-        private readonly ILogger<VillaAPIController> _logger;
+        private readonly ILogger<VillaAPIv1Controller> _logger;
         private readonly IVillaRepository _dbVilla;
         private readonly IMapper _mapper;
         protected APIResponse _response;
 
-        public VillaAPIController(ILogger<VillaAPIController> logger, IVillaRepository dbVilla, IMapper mapper)
+        public VillaAPIv1Controller(ILogger<VillaAPIv1Controller> logger, IVillaRepository dbVilla, IMapper mapper)
         {
             _logger = logger;
             _dbVilla = dbVilla;
@@ -30,7 +28,6 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpGet("villas")]
-        [MapToApiVersion("1.0")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -63,23 +60,7 @@ namespace MagicVilla_VillaAPI.Controllers
 
             return _response;
         }
-
-        [HttpGet("villas")]
-        [AllowAnonymous]
-        [MapToApiVersion("2.0")]
-        public async Task<string> Get()
-        {
-            return "Hello world from version 2.0";
-        }
-
-        [HttpGet("villas")]
-        [AllowAnonymous]
-        [MapToApiVersion("3.0")]
-        public async Task<string> GetThird()
-        {
-            return "Hello world from version 3.0";
-        }
-
+               
         [HttpGet("{id}", Name = "GetVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
