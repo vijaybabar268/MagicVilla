@@ -6,6 +6,7 @@ using MagicVilla_VillaAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Text.Json;
 
 namespace MagicVilla_VillaAPI.Controllers.v1
 {
@@ -60,6 +61,9 @@ namespace MagicVilla_VillaAPI.Controllers.v1
 
                 _logger.LogInformation("Finish: GetVillas() Count:" + villas.Count());
 
+                Pagination pagination = new Pagination() { PageSize = pageSize, PageNumber = pageNumber };
+
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
                 _response.Result = _mapper.Map<IEnumerable<VillaDto>>(villas);
                 _response.StatusCode = HttpStatusCode.OK;
 
