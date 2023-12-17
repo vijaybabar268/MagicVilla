@@ -32,7 +32,7 @@ namespace MagicVilla_VillaAPI.Controllers.v1
         [ResponseCache(CacheProfileName = "Default30")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<APIResponse>> GetVillas([FromQuery(Name = "filterOccupancy")] int? occupancy)
+        public async Task<ActionResult<APIResponse>> GetVillas([FromQuery(Name = "filterOccupancy")] int? occupancy, [FromQuery] string? search)
         {
             try
             {
@@ -43,6 +43,11 @@ namespace MagicVilla_VillaAPI.Controllers.v1
                 if(occupancy > 0)
                 {
                     villas = villas.Where(u => u.Occupancy == occupancy);
+                }
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    villas = villas.Where(u => u.Name.ToLower().Contains(search));
                 }
 
                 if (villas.Count() == 0)
