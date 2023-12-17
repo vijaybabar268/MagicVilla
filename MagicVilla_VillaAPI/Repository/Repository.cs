@@ -30,7 +30,7 @@ namespace MagicVilla_VillaAPI.Repository
 
             if (filter != null)
                 query = query.Where(filter);
-
+                        
             if(includeProperties != null)
             {
                 foreach(var includeProd in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
@@ -42,12 +42,23 @@ namespace MagicVilla_VillaAPI.Repository
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string? includeProperties = null)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, string? includeProperties = null,
+            int pageSize = 3, int pageNumber = 1)
         {
             IQueryable<T> query = _dbSet;
 
             if (filter != null)
                 query = query.Where(filter);
+
+            if (pageSize > 0)
+            {
+                if (pageSize > 100)
+                {
+                    pageNumber = 100;
+                }
+                // 5*(1-1).take(5) --> skip0.take(5)                
+                query = query.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
+            }
 
             if (includeProperties != null)
             {

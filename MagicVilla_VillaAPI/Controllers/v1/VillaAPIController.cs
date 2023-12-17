@@ -32,13 +32,14 @@ namespace MagicVilla_VillaAPI.Controllers.v1
         [ResponseCache(CacheProfileName = "Default30")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<APIResponse>> GetVillas([FromQuery(Name = "filterOccupancy")] int? occupancy, [FromQuery] string? search)
+        public async Task<ActionResult<APIResponse>> GetVillas([FromQuery(Name = "filterOccupancy")] int? occupancy, [FromQuery] string? search,
+            int pageSize = 2, int pageNumber = 1)
         {
             try
             {
                 _logger.LogInformation("Start: GetVillas() Invoke");
 
-                var villas = await _dbVilla.GetAllAsync(); 
+                var villas = await _dbVilla.GetAllAsync(pageSize: pageSize, pageNumber: pageNumber); 
 
                 if(occupancy > 0)
                 {
