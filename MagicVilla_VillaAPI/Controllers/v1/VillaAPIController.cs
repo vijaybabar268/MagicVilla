@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using MagicVilla_VillaAPI.Models;
 using MagicVilla_VillaAPI.Models.Dto;
 using MagicVilla_VillaAPI.Repository.IRepository;
@@ -8,9 +9,9 @@ using System.Net;
 
 namespace MagicVilla_VillaAPI.Controllers.v1
 {
-    [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
+    [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]    
     [Authorize]
     public class VillaAPIController : ControllerBase
     {
@@ -28,7 +29,6 @@ namespace MagicVilla_VillaAPI.Controllers.v1
         }
 
         [HttpGet("villas")]
-        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<APIResponse>> GetVillas()

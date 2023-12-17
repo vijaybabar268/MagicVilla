@@ -1,8 +1,10 @@
+using Asp.Versioning;
 using MagicVilla_VillaAPI;
 using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Repository;
 using MagicVilla_VillaAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -128,13 +130,26 @@ builder.Services.AddSwaggerGen(opt =>
     });
 });
 
-builder.Services.AddApiVersioning(options =>
+//builder.Services.AddApiVersioning(options =>
+//{
+//    options.AssumeDefaultVersionWhenUnspecified = true;
+//    options.DefaultApiVersion = new ApiVersion(1, 0);
+//    options.ReportApiVersions = true;
+//});
+//builder.Services.AddVersionedApiExplorer(options =>
+//{
+//    options.GroupNameFormat = "'v'VVV";
+//    options.SubstituteApiVersionInUrl = true;
+//});
+
+var apiVersioningBuilder = builder.Services.AddApiVersioning(config =>
 {
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.ReportApiVersions = true;
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    config.ReportApiVersions = true;
 });
-builder.Services.AddVersionedApiExplorer(options =>
+
+apiVersioningBuilder.AddApiExplorer(options =>
 {
     options.GroupNameFormat = "'v'VVV";
     options.SubstituteApiVersionInUrl = true;
