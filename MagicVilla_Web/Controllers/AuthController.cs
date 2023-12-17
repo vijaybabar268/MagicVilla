@@ -34,7 +34,7 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> Login(LoginRequestDto model)
         {
             APIResponse response = await _authService.LoginAsync<APIResponse>(model);
-            if (response != null || response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
                 LoginResponseDto result = JsonConvert.DeserializeObject<LoginResponseDto>(response.Result.ToString());
 
